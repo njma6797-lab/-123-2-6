@@ -10,6 +10,7 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
+    flex-direction:column;
     background:#020617;
     color:#fff;
     font-family:Arial;
@@ -23,10 +24,20 @@ body{
     animation:spin 1s linear infinite;
 }
 .text{
-    position:absolute;
-    top:65%;
+    margin-top:20px;
     font-size:18px;
     opacity:.8;
+}
+button{
+    margin-top:25px;
+    padding:10px 25px;
+    font-size:16px;
+    border:none;
+    border-radius:6px;
+    background:#38bdf8;
+    color:#000;
+    cursor:pointer;
+    display:none;
 }
 @keyframes spin{
     0%{transform:rotate(0)}
@@ -38,24 +49,23 @@ body{
 
 <div class="loader"></div>
 <div class="text">جاري التحقق...</div>
+<button onclick="speak()">اضغط للمتابعة</button>
 
 <script>
-setTimeout(() => {
-    document.querySelector(".text").innerText = "تم التحقق";
+setTimeout(()=>{
+    document.querySelector(".loader").style.display="none";
+    document.querySelector(".text").innerText="اضغط للمتابعة";
+    document.querySelector("button").style.display="block";
+},5000);
 
+function speak(){
     let msg = new SpeechSynthesisUtterance(
         "تم التعرف عليه أحمد راتب، محافظة البحيرة، مدينة المحمودية، عزبة كومبو، المهنة عاطل، السن تسعة عشر، أعزب، وتم التأكد أنك لست مؤهلًا لدخول الموقع"
     );
-
     msg.lang = "ar-EG";
     msg.rate = 0.9;
-
-    let voices = speechSynthesis.getVoices();
-    let arabicVoice = voices.find(v => v.lang.includes("ar"));
-    if(arabicVoice) msg.voice = arabicVoice;
-
     speechSynthesis.speak(msg);
-}, 5000);
+}
 </script>
 
 </body>
