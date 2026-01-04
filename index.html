@@ -1,1 +1,62 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>Loading...</title>
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#020617;
+    color:#fff;
+    font-family:Arial;
+}
+.loader{
+    width:90px;
+    height:90px;
+    border:10px solid #1e293b;
+    border-top:10px solid #38bdf8;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+.text{
+    position:absolute;
+    top:65%;
+    font-size:18px;
+    opacity:.8;
+}
+@keyframes spin{
+    0%{transform:rotate(0)}
+    100%{transform:rotate(360deg)}
+}
+</style>
+</head>
+<body>
 
+<div class="loader"></div>
+<div class="text">جاري التحقق...</div>
+
+<script>
+setTimeout(() => {
+    document.querySelector(".text").innerText = "تم التحقق";
+
+    let msg = new SpeechSynthesisUtterance(
+        "تم التعرف عليه أحمد راتب، محافظة البحيرة، مدينة المحمودية، عزبة كومبو، المهنة عاطل، السن تسعة عشر، أعزب، وتم التأكد أنك لست مؤهلًا لدخول الموقع"
+    );
+
+    msg.lang = "ar-EG";
+    msg.rate = 0.9;
+
+    let voices = speechSynthesis.getVoices();
+    let arabicVoice = voices.find(v => v.lang.includes("ar"));
+    if(arabicVoice) msg.voice = arabicVoice;
+
+    speechSynthesis.speak(msg);
+}, 5000);
+</script>
+
+</body>
+</html>
